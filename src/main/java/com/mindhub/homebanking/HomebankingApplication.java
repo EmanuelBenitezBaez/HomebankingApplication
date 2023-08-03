@@ -22,6 +22,7 @@ public class HomebankingApplication {
 		return (args) -> {
 			Client client = new Client("78945661","Emanuel","Bez",null);
 			ClientRepository.save(client);
+			//
 		};
 	}
 
