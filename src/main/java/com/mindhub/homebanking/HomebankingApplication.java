@@ -20,9 +20,9 @@ public class HomebankingApplication {
 	@Bean
 	public CommandLineRunner initData(ClientRepository ClientRepository){
 		return (args) -> {
-			Client client = new Client("78945661","Emanuel","Bez",null);
+			Client client = new Client( "Melba","Morel","melba@mindhub.com");
 			ClientRepository.save(client);
-			//
+
 		};
 	}
 

@@ -15,9 +15,11 @@ public class Client {
     @GenericGenerator(name = "native",strategy = "native")
 
     private Long id;
-    private String dni;
-    private String name;
-    private String lastname;
+
+    private String firstName;
+    private String lastName;
+
+    private String email;
 
 
 
@@ -26,42 +28,43 @@ public class Client {
 //SE PIDE CONSTRUCTOR VACIO PARA CREAR NUEVO CLIENTE
     }
     //CONSTRUCTOR
-    public Client(String dni, String name, String lastname, Long id) {
-        this.dni = dni;
-        this.name = name;
-        this.lastname = lastname;
-        this.id = id;
+
+    public Client(String firstName, String lastName, String email) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     //GETTERS Y SETTERS
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
 
     public Long getId() {
         return id;
     }
 
 
+
+    public String getfirstName() {
+        return firstName;
+    }
+
+    public void setfirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
