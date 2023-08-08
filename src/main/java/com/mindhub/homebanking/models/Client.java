@@ -2,53 +2,47 @@ package com.mindhub.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 public class Client {
-    //ATRIBUTOS
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native",strategy = "native")
-
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
+
 
     private String firstName;
     private String lastName;
-
     private String email;
 
+    @OneToMany(mappedBy = "clientId", fetch = FetchType.EAGER)
+     private Set<Account> accounts = new HashSet<>();
 
-
-    //CONSTRUCTOR VACIO
     public Client() {
-//SE PIDE CONSTRUCTOR VACIO PARA CREAR NUEVO CLIENTE
+
     }
-    //CONSTRUCTOR
 
     public Client(String firstName, String lastName, String email) {
-
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    //GETTERS Y SETTERS
+    // GETTERS Y SETTERS
 
     public Long getId() {
         return id;
     }
 
-
-
-    public String getfirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setfirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -56,8 +50,8 @@ public class Client {
         return lastName;
     }
 
-    public void setLastName(String lastname) {
-        this.lastName = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -67,4 +61,24 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+
+    public void addAccount(Account account) {
+
+        account.setClientId(this);
+
+        accounts.add(account);
+
+
+    }
+
 }
