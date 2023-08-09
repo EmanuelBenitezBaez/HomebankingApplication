@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
 public class Client {
     @Id
@@ -14,16 +13,14 @@ public class Client {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-
     private String firstName;
     private String lastName;
     private String email;
 
     @OneToMany(mappedBy = "clientId", fetch = FetchType.EAGER)
-     private Set<Account> accounts = new HashSet<>();
-
+    private Set<Account> accounts = new HashSet<>();
+    //CONSTRUCTORS
     public Client() {
-
     }
 
     public Client(String firstName, String lastName, String email) {
@@ -32,10 +29,19 @@ public class Client {
         this.email = email;
     }
 
-    // GETTERS Y SETTERS
 
+
+    public void addAccount(Account account) {
+        account.setClientId(this);
+        accounts.add(account);
+    }
+    // GETTERS AND SETTERS
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -66,19 +72,7 @@ public class Client {
         return accounts;
     }
 
-
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
     }
-
-
-    public void addAccount(Account account) {
-
-        account.setClientId(this);
-
-        accounts.add(account);
-
-
-    }
-
 }

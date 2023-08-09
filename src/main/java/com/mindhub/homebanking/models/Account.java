@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Account {
@@ -13,13 +15,18 @@ public class Account {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "clientId")//columna que los va a unir
+    @JoinColumn(name = "clientId")
     private Client clientId;
     private String number;
     private LocalDate date;
     private double balance;
 
-    public  Account() {
+    @OneToMany(mappedBy = "accountId", fetch = FetchType.EAGER)
+    private Set<Transaction> transactions = new HashSet<>();
+
+
+    //CONSTRUCTORS
+    public Account() {
 
     }
 
@@ -30,18 +37,31 @@ public class Account {
         this.balance = balance;
     }
 
-    // GETTERS Y SETTERS
+    // GETTERS AND SETTERS
+
+    public void addTransaction(Transaction transaction) {
+        transaction.setAccountId(this);
+        transactions.add(transaction);
+    }
+
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Client getClientId() {
         return clientId;
     }
 
-    public void setClientId(Client client) {
-        this.clientId = client;
+    public void setClientId(Client clientId) {
+        this.clientId = clientId;
     }
 
     public String getNumber() {
@@ -66,5 +86,9 @@ public class Account {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

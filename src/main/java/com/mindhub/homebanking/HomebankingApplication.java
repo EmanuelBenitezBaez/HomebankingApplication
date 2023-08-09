@@ -3,8 +3,11 @@ package com.mindhub.homebanking;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.Transaction;
+import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +24,7 @@ public class HomebankingApplication {
 
 	}
 	@Bean
-	public CommandLineRunner initData(ClientRepository ClientRepository, AccountRepository AccountRepository){
+	public CommandLineRunner initData(ClientRepository ClientRepository, AccountRepository AccountRepository, TransactionRepository transactionRepository){
 		return (args) -> {
 			Client client = new Client( "Melba","Morel","melba@mindhub.com");
 			ClientRepository.save(client);
@@ -39,8 +42,22 @@ public class HomebankingApplication {
 			client.addAccount(account1);
 			AccountRepository.save(account1);
 
-
 			ClientDTO clientDTO = new ClientDTO(client);
+
+
+
+			Transaction transaction1 = new Transaction(TransactionType.CREDIT, 150.000,"Pago Alquiler",LocalDate.now());
+			Transaction transaction2 = new Transaction(TransactionType.CREDIT, 100.000,"Compras Supermercado",LocalDate.now());
+			Transaction transaction3 = new Transaction(TransactionType.DEBIT, 200.000,"Pago de Impuestos",LocalDate.now());
+
+			account.addTransaction(transaction1);
+			account.addTransaction(transaction2);
+			account1.addTransaction(transaction3);
+
+			transactionRepository.save(transaction1);
+			transactionRepository.save(transaction2);
+			transactionRepository.save(transaction3);
+
 
 			//ClientDTO clientDTO1 = new ClientDTO(client1);
 
