@@ -14,8 +14,8 @@ public class Transaction {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "accountId")
-    private Account accountId;
+    @JoinColumn(name = "account")
+    private Account account;
     private TransactionType type;
     private double amount;
     private String description;
@@ -42,12 +42,12 @@ public class Transaction {
         this.id = id;
     }
 
-    public Account getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
+    public void setAccountId(Account account) {
+        this.account = account;
     }
 
     public TransactionType getType() {
