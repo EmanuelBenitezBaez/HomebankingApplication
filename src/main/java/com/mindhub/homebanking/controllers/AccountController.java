@@ -17,24 +17,24 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class AccountController {
 
+    private final AccountRepository accountRepository;
+
     @Autowired
-    private AccountRepository accountRepository;
+    public AccountController(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @GetMapping("/accounts")
     public List<AccountDTO> getAccounts() {
-        List<Account> allAccounts = accountRepository.findAll();
-        List<AccountDTO> convertedList = allAccounts
-                .stream()
-                .map(currentAccount -> new AccountDTO(currentAccount))
+        return accountRepository.findAll().stream()
+                .map(AccountDTO::new)
                 .collect(Collectors.toList());
-
-        return convertedList;
     }
 
     @GetMapping("/accounts/{id}")
     public AccountDTO getAccountId(@PathVariable Long id) {
-        Optional<Account> accountOptional = accountRepository.findById(id);
-
-        return new AccountDTO(accountOptional.get());
+        return accountRepository.findById(id)
+                .map(AccountDTO::new)
+                .orElseThrow(() -> new RuntimeException("Account not found"));
     }
 }
