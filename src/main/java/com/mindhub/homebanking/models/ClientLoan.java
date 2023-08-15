@@ -13,9 +13,8 @@ public class ClientLoan {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-
-    private double amount;    // Monto del préstamo
-    private int payments;    // Número de pagos
+    private double amount;
+    private int payments;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
