@@ -35,6 +35,6 @@ public class AccountController {
     public AccountDTO getAccountId(@PathVariable Long id) {
         return accountRepository.findById(id)
                 .map(AccountDTO::new)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+                .orElseThrow((null));
     }
 }
