@@ -3,6 +3,7 @@ package com.mindhub.homebanking.dtos;
 import com.mindhub.homebanking.models.Client;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,7 @@ public class ClientDTO {
     public Set<CardDTO> getCards() {
         return cards;
 }
+
 
 
 }

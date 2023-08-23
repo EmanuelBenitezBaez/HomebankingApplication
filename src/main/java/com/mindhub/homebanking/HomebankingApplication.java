@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +15,9 @@ import java.util.List;
 @SpringBootApplication
 public class HomebankingApplication {
 
+
+	@Autowired
+	private PasswordEncoder passwordEncoder; // Inyectar PasswordEncoder
 	public static void main(String[] args) {
 
 		SpringApplication.run(HomebankingApplication.class, args);
@@ -22,12 +27,11 @@ public class HomebankingApplication {
 	public CommandLineRunner initData(ClientRepository ClientRepository, AccountRepository AccountRepository, TransactionRepository transactionRepository,
 									  LoanRepository LoanRepository, ClientLoanRepository ClientLoanRepository, CardRepository CardRepository){
 		return (args) -> {
-			Client client = new Client( "Melba","Morel","melba@mindhub.com");
+			Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123")); // Aca se cifra la contraseña
 			ClientRepository.save(client);
 
-			Client client1 = new Client( "Emanuel","Benitez Baez","emanuel@gmail.com");
+			Client client1 = new Client("Emanuel", "Benitez Baez", "emanuel@gmail.com", passwordEncoder.encode("111")); // Aca se cifra la contraseña
 			ClientRepository.save(client1);
-
 
 
 			Account account = new Account("VIN001", LocalDate.now(),5000);
