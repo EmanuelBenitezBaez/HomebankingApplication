@@ -17,13 +17,13 @@ public class Card {
     private CardType type;
     private CardColor color;
     private String number;
-    private String cvv;
+    private short cvv;
 
     private LocalDate thruDate;
 
     private LocalDate fromDate;
 
-
+    private State state;
 @ManyToOne(fetch = FetchType.EAGER)
 @JoinColumn(name = "client")
 private Client client;
@@ -32,16 +32,17 @@ private Client client;
 
     }
 
-    public Card( String cardHolder, CardType type, CardColor color, String number, String cvv, LocalDate fromDate, LocalDate thruDate, Client client) {
+    public Card( String cardHolder, CardType type, CardColor color, String cvv, LocalDate fromDate, LocalDate thruDate, Client client) {
 
         this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
         this.number = number;
-        this.cvv = cvv;
+        this.cvv=(short) (Math.random() * (999 - 100) + 100);
         this.thruDate = thruDate;
         this.fromDate = fromDate;
         this.client = client;
+        this.state=State.ACTIVE;
     }
 
     //GETS Y SETS
@@ -87,11 +88,11 @@ private Client client;
         this.number = number;
     }
 
-    public String getCvv() {
+    public short getCvv() {
         return cvv;
     }
 
-    public void setCvv(String cvv) {
+    public void setCvv(short cvv) {
         this.cvv = cvv;
     }
 
@@ -119,6 +120,12 @@ private Client client;
         this.client = client;
     }
 
+    public State getState() {
+        return state;
+    }
 
+    public void setState(State state) {
+        this.state = state;
+    }
 
 }

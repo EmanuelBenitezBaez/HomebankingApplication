@@ -1,6 +1,8 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
+import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -11,8 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.mindhub.homebanking.utils.AccountUtils.accountNumber;
 
 @RestController
 @RequestMapping("/api")
@@ -64,10 +69,21 @@ public class ClientController {
             return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
         }
 
-        clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        Client clientNewUser=new Client(firstName, lastName, email, passwordEncoder.encode(password));
+
+        Account accountNewUser=new Account(accountNumber(accountRepository), LocalDate.now(),0.00, AccountType.CHECKING);
+        clientNewUser.addAccounts(accountNewUser);
+        clientRepository.save(clientNewUser);
+        accountRepository.save(accountNewUser);
+        return new ResponseEntity<>("user created successfully",HttpStatus.CREATED);
+
+
+
     }
+
+
 
 
 

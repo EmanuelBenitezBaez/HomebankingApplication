@@ -24,17 +24,18 @@ public class Account {
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Transaction> transactions = new HashSet<>();
 
-
+    private AccountType accountType;
     //CONSTRUCTORS
     public Account() {
 
     }
 
-    public Account(String number, LocalDate date, double balance) {
+    public Account(String number, LocalDate date, double balance,AccountType accountType) {
 
         this.number = number;
         this.date = date;
         this.balance = balance;
+        this.accountType = accountType;
     }
 
     // GETTERS AND SETTERS
@@ -91,4 +92,11 @@ public class Account {
     public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+    public void setClient(Client client){
+    this.client =client;
+}
+
+
+
 }

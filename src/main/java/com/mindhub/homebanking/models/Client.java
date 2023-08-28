@@ -117,4 +117,24 @@ public class Client {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+    /////
+    public Set<Account> getAccount() {
+        return accounts;
+    }
+
+    public void setAccount(Set<Account> account){
+        this.accounts=account;
+    }
+
+    public void addAccounts(Account account) {
+        account.setClient(this);
+        accounts.add(account);
+    }
+
+    ////
+
+
+
 }

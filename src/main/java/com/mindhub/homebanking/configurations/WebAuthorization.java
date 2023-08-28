@@ -24,29 +24,23 @@ class WebAuthorization extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
 
-                /*
-                .antMatchers("/api/login","/api/logout").permitAll()
-                .antMatchers("/web/index.html", "/web/css/**","/web/js/**", "/web/img/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/clients").hasAnyAuthority("ADMIN")
-               // .antMatchers("/web/admin/**","/rest/**", "/h2-console/**").hasAuthority("ADMIN")
-                .antMatchers("/web/accounts.html").hasAnyAuthority("ADMIN", "CLIENT")
-                .antMatchers("/web/**").hasAnyAuthority("ADMIN", "CLIENT");
-               */
+
                 // Permitir acceso público a rutas de inicio de sesión y cierre de sesión
-                .antMatchers("/api/login", "/api/logout").permitAll()
+               // .antMatchers("/api/login", "/api/logout").permitAll()
                 // Permitir acceso público a recursos estáticos (CSS, JS, imágenes)
-                .antMatchers("/web/index.html", "/web/css/**", "/web/js/**", "/web/img/**").permitAll()
+               // .antMatchers("/web/index.html", "/web/css/**", "/web/js/**", "/web/img/**").permitAll()
                 // Permitir registro de nuevos clientes
-                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+               // .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 // Requiere rol de ADMIN para ver la lista de clientes
-                .antMatchers(HttpMethod.GET, "/api/clients").hasAnyAuthority("ADMIN")
+               // .antMatchers(HttpMethod.GET, "/api/clients").hasAnyAuthority("ADMIN")
+               // .antMatchers("/web/admin/**","/rest/**", "/h2-console/**").hasAuthority("ADMIN")
                 // Páginas de cuentas accesibles para ADMIN y CLIENT
-                .antMatchers("/web/accounts.html").permitAll()
+               // .antMatchers("/web/accounts.html").permitAll()
                 // Acceso general a rutas web para ADMIN y CLIENT
-                .antMatchers("/web/**").hasAnyAuthority("ADMIN", "CLIENT");
+               // .antMatchers("/web/**").hasAnyAuthority("ADMIN", "CLIENT")
                 // Cualquier otra solicitud requiere autenticación
-                //.anyRequest().authenticated();
+                .antMatchers("/**").permitAll()
+                .anyRequest().authenticated();
 
 
 
@@ -60,7 +54,7 @@ class WebAuthorization extends WebSecurityConfigurerAdapter {
 
 
 
-        http.logout().logoutUrl("/api/logout");
+        http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
 
 

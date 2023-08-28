@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.mindhub.homebanking.utils.AccountUtils.numberCards;
+
 @SpringBootApplication
 public class HomebankingApplication {
 
@@ -34,15 +36,16 @@ public class HomebankingApplication {
 			ClientRepository.save(client1);
 
 
-			Account account = new Account("VIN001", LocalDate.now(),5000);
+			Account account = new Account("VIN001",LocalDate.now(),5000.0,AccountType.CHECKING);
 			client.addAccount(account);
 			AccountRepository.save(account);
 
-			Account account1 = new Account("VIN002", LocalDate.now().plusDays(1),7500);
+			Account account1 = new Account("VIN002",LocalDate.now().plusDays(1) ,7500.0,AccountType.SAVINGS);
 			client.addAccount(account1);
 			AccountRepository.save(account1);
 
 			ClientDTO clientDTO = new ClientDTO(client);
+
 
 			Transaction transaction1 = new Transaction(TransactionType.CREDIT, 150.000,"Pago Alquiler",LocalDate.now());
 			Transaction transaction2 = new Transaction(TransactionType.CREDIT, 100.000,"Compras Supermercado",LocalDate.now());
@@ -56,7 +59,7 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction2);
 			transactionRepository.save(transaction3);
 
-//
+
             Loan loan = new Loan("Hipotecario",500000.000, List.of(12,24,36,48,60));
             LoanRepository.save(loan);
             Loan loan1 = new Loan("Personal",100000.000, List.of(6,12,24));
@@ -70,35 +73,35 @@ public class HomebankingApplication {
 			ClientLoanRepository.save(clientLoan1);
 
 
-///////
 
-// Crea tarjetas GOLD para Melba
-			Card debitCardGold = new Card("Melba Morel",CardType.DEBIT,CardColor.GOLD,"2318-4541-5645-4575","990",LocalDate.now(),LocalDate.now().plusYears(5),client);
+
+
+			Card debitCardGold = new Card(client.getFirstName()+" "+client.getLastName(),CardType.DEBIT,CardColor.GOLD,numberCards(CardRepository), LocalDate.now(),LocalDate.now().plusYears(5),client);
 			client.addCard(debitCardGold);
 			CardRepository.save(debitCardGold);
-			Card creditCardGold = new Card("Melba Morel",CardType.CREDIT,CardColor.GOLD,"6587-4541-5645-5775","991",LocalDate.now(),LocalDate.now().plusYears(5),client);
+			Card creditCardGold = new Card(client.getFirstName()+" "+client.getLastName(),CardType.CREDIT,CardColor.GOLD,numberCards(CardRepository), LocalDate.now(),LocalDate.now().plusYears(5),client);
 			client.addCard(creditCardGold);
 			CardRepository.save(creditCardGold);
 
-// Crea tarjetas  Titanium para Melba
-			Card creditCardTitanium = new Card("Melba Morel",CardType.CREDIT,CardColor.TITANIUM,"8744-1115-6454-5865","750",LocalDate.now(),LocalDate.now().plusYears(5),client);
+
+			Card creditCardTitanium = new Card(client.getFirstName()+" "+client.getLastName(),CardType.CREDIT,CardColor.TITANIUM,numberCards(CardRepository), LocalDate.now(),LocalDate.now().plusYears(5),client);
 			client.addCard(creditCardTitanium);
 			CardRepository.save(creditCardTitanium);
-			Card debitCardTitanium = new Card("Melba Morel",CardType.DEBIT,CardColor.TITANIUM,"4458-1115-6454-8565","751",LocalDate.now(),LocalDate.now().plusYears(5),client);
+			Card debitCardTitanium = new Card(client.getFirstName()+" "+client.getLastName(),CardType.DEBIT,CardColor.TITANIUM,numberCards(CardRepository), LocalDate.now(),LocalDate.now().plusYears(5),client);
 			client.addCard(debitCardTitanium);
 			CardRepository.save(debitCardTitanium);
 
-			// Crea tarjetas Silver para Melba
-			Card debitCardSilver = new Card("Melba Morel",CardType.DEBIT,CardColor.SILVER,"2235-1115-6454-7465","753",LocalDate.now(),LocalDate.now().plusYears(5),client);
+
+			Card debitCardSilver = new Card(client.getFirstName()+" "+client.getLastName(),CardType.DEBIT,CardColor.SILVER,numberCards(CardRepository), LocalDate.now(),LocalDate.now().plusYears(5),client);
 			client.addCard(debitCardSilver);
 			CardRepository.save(debitCardSilver);
-			Card creditCardSilver = new Card("Melba Morel",CardType.CREDIT,CardColor.SILVER,"1112-1115-6454-9265","754",LocalDate.now(),LocalDate.now().plusYears(5),client);
+			Card creditCardSilver = new Card(client.getFirstName()+" "+client.getLastName(),CardType.CREDIT,CardColor.SILVER,numberCards(CardRepository), LocalDate.now(),LocalDate.now().plusYears(5),client);
 			client.addCard(creditCardSilver);
 			CardRepository.save(creditCardSilver);
 
 
-// Crear una tarjeta de crédito Silver para Emanuel
-			Card cardSilver = new Card("Emanuel Benitez Baez", CardType.CREDIT, CardColor.SILVER, "1235-6242-5321-7452", "453", LocalDate.now(), LocalDate.now().plusYears(5), client1);
+
+			Card cardSilver = new Card(client.getFirstName()+" "+client.getLastName(),CardType.CREDIT,CardColor.GOLD,numberCards(CardRepository), LocalDate.now(),LocalDate.now().plusYears(5),client);
 			client1.addCard(cardSilver);
 			CardRepository.save(cardSilver);
 
